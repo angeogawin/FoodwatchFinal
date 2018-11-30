@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="swipeout-actions-right">
-              <a href="#" class="swipeout-delete" @click="delete" data-id="{{code}}">Delete</a>
+              <a href="#" class="swipeout-delete" @click="delete" data-id="{{code}}" data-confirm="Are you sure want to delete this item?" data-confirm-title="Delete?">Delete</a>
             </div>
           </li>
           {{/each}}
@@ -52,17 +52,21 @@
     },
     methods: {
       delete: function (e) {
-        var id = $$(e.srcElement).data("id")
-        app.request({
-          method: "DELETE",
-          url: "https://foxxy.ovh/_db/ema_api/api/favorites/" + id,
-          headers: {
-            "X-Session-Id": window.localStorage.getItem("jwt")
-          },
-          success: function (data) {
-            console.log("deleted")
-          }
-        })
+        
+   
+           var id = $$(e.srcElement).data("id")
+           app.request({
+            method: "DELETE",
+            url: "https://foxxy.ovh/_db/ema_api/api/favorites/" + id,
+            headers: {
+              "X-Session-Id": window.localStorage.getItem("jwt")
+            },
+            success: function (data) {
+              console.log("deleted")
+            }
+          })
+    
+      
       }
     },
     on: {

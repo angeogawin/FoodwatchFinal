@@ -54,8 +54,8 @@
       <!-- Toolbar -->
       <div class="toolbar toolbar-bottom-md">
         <div class="toolbar-inner">
-          <a id="signin" class="link hidden login-screen-open" data-login-screen=".login-screen">SignIn</a>
-          <a id="signup" class="link hidden">SignUp</a>
+          <a id="signin" class="link hidden login-screen-open" data-login-screen=".signin">SignIn</a>
+          <a id="signup" data-login-screen=".signup" class="link hidden login-screen-open">SignUp</a>
           <a id="fav" href="/favorites/" class="link hidden">Fav</a>
           <a id="logout" class="link hidden">Logout</a>
         </div>
@@ -93,12 +93,14 @@
             <div class="col"><a class="button convert-form-to-data" href="#" id="scan">Scan</a></div>
             <div class="col"><a class="button convert-form-to-data" href="#" id="getdata">Get Data</a></div>
           </div><!-- Link to another page -->
+
+          <img src="img/foodlogo.png" class="center">
         </div>
 
 
       </div>
 
-      <div class="login-screen">
+      <div class="login-screen signin">
         <div class="view">
           <div class="page">
             <div class="page-content login-screen-content">
@@ -110,7 +112,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">Username</div>
                         <div class="item-input-wrap">
-                          <input type="text" name="username" id="username" placeholder="Your username">
+                          <input type="email" name="username" id="username" placeholder="Your username">
                         </div>
                       </div>
                     </li>
@@ -127,6 +129,71 @@
                 <div class="list">
                   <ul>
                     <li><a class="item-link list-button" id="signin-btn" href="#">Sign In</a></li>
+                    <li><a class="item-link list-button login-screen-close">Close</a></li>
+                  </ul>
+
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+       <div class="login-screen signup">
+        <div class="view">
+          <div class="page">
+            <div class="page-content login-screen-content">
+              <div class="login-screen-title">FoodWatch</div>
+              <form>
+                <div class="list">
+                  <ul>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-label">First Name</div>
+                        <div class="item-input-wrap">
+                          <input type="text" name="first_name" id="first_name" placeholder="Your First Name">
+                        </div>
+                      </div>
+                    </li>
+                     <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-label">Last Name</div>
+                        <div class="item-input-wrap">
+                          <input type="text" name="last_name" id="last_name" placeholder="Your Last Name">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-label">Email</div>
+                        <div class="item-input-wrap">
+                          <input type="email" name="email" id="email" placeholder="Your Email">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-label">Password</div>
+                        <div class="item-input-wrap">
+                          <input type="password" name="password_signup" id="password_signup" placeholder="Your password">
+                        </div>
+                      </div>
+                    </li>
+                      <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title item-label">Password Confirmation</div>
+                        <div class="item-input-wrap">
+                          <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Your password Confirmation">
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="list">
+                  <ul>
+                    <li><a class="item-link list-button" id="signup-btn" href="#">Sign Up</a></li>
                     <li><a class="item-link list-button login-screen-close">Close</a></li>
                   </ul>
 

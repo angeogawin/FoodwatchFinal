@@ -64,6 +64,7 @@ var app = new Framework7({
     },
     {
       path: '/favorites/',
+      
       componentUrl: 'favorites.html',
     },
     {
@@ -82,7 +83,7 @@ var $$ = Dom7;
 var codebar = function(){
   cordova.plugins.barcodeScanner.scan(
     function (result) {
-      console.log("We got a barcode\n" +
+      alert("We got a barcode\n" +
               "Result: " + result.text + "\n" +
               "Format: " + result.format + "\n" +
               "Cancelled: " + result.cancelled);
@@ -94,7 +95,6 @@ var codebar = function(){
     },
     function (error) {
         alert("Scanning failed: " + error);
-    }, {
     }
  );
 }
@@ -159,6 +159,44 @@ $$("#signin-btn").on("click", function(e) {
   })
 })
 
+$$("#signup-btn").on("click", function(e) {
+  app.request.post("https://foxxy.ovh/_db/ema_api/api/auth/signup", JSON.stringify({
+    "first_name": $$("#first_name").val(),
+    "last_name": $$("#last_name").val(),
+    "email": $$("#email").val(),
+    "password": $$("#password_signup").val(),
+    "password_confirmation": $$("#password_confirmation").val()
+  }), function(data, s, h){
+    data = JSON.parse(data)
+    if(data.success) {
+     // window.localStorage.setItem("jwt", h.getResponseHeader('X-Session-Id'))
+      $$("#fav").removeClass("hidden")
+      $$("#logout").removeClass("hidden")
+      $$("#signin").addClass("hidden")
+      $$("#signup").addClass("hidden")
+      $$(".modal-in").addClass("modal-out")
+      $$(".modal-in").removeClass("modal-in")
+      var notificationFull = app.notification.create({
+        title: 'FoodWatch',
+        titleRightText: 'now',
+        subtitle: 'Enregistrement reussi',
+        text: 'Tout sest bien passé',
+        closeTimeout: 3000,
+      });
+      notificationFull.open();
+    } else {
+      var notificationFull = app.notification.create({
+        title: 'FoodWatch',
+        titleRightText: 'now',
+        subtitle: 'Bad login or password',
+        text: 'It looks like there is this error: '+data.errorMessage,
+        closeTimeout: 3000,
+      });
+      notificationFull.open();
+    }
+  })
+})
+
 $$("#getdata").on("click", function(){
   var id = $$("#code").val()
   //var id = "3029330003533"
@@ -171,4 +209,3 @@ $$("#getdata").on("click", function(){
 $$("#scan").on("click", function(){
   codebar()
 })
-

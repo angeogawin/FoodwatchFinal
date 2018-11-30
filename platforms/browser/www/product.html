@@ -14,7 +14,7 @@
     </div>
     <div class="page-content">
       <div style="padding:10px">
-        <a href="#" class="button button-fill" @click="add_fav">Ajouter aux favoris</a>
+        <a id="addfav" class="button button-fill" @click="add_fav">Ajouter aux favoris</a>
         <p>{{product.ingredients_text_fr}}</p>
         <img src="{{product.image_front_url}}" width="100%" alt="">
       </div>
@@ -34,11 +34,37 @@
     data: function () {
       return {
         product: {},
+        favorites: [],
       }
     },
     methods: {
       add_fav: function () {
-        var self = this
+         var self = this
+
+       //si le produit est deja  dans la liste des favs
+        if(self.favorites.some(item =>item.code===self.product.code)){
+        
+         var notificationFull = app.notification.create({
+        title: 'FoodWatch',
+        titleRightText: 'now',
+        subtitle: 'Produit existant',
+        text: 'Produit dejà dans les favoris ',
+        closeTimeout: 3000,
+      });
+      notificationFull.open();
+        }
+        else{
+          if(window.localStorage.getItem("jwt")===null){
+                var notificationFull = app.notification.create({
+        title: 'FoodWatch',
+        titleRightText: 'now',
+        subtitle: 'Non connecté',
+        text: 'Veuillez d abord vous connecter',
+        closeTimeout: 3000,
+      });
+      notificationFull.open();
+          }
+       
         app.request({
           url: "https://foxxy.ovh/_db/ema_api/api/favorites",
           method: "POST",
@@ -52,22 +78,43 @@
           }),
           success: function () {
             app.dialog.alert('Added successfully');
+           $$("#addfav").addClass("hidden")
           }
         })
+      }
       }
     },
     on: {
       pageInit: function () {
         // do something on page init
+
+        //on recupere la liste des favoris
+          app.request({
+          url: "https://foxxy.ovh/_db/ema_api/api/favorites",
+          headers: {
+            "X-Session-Id": window.localStorage.getItem("jwt")
+          },
+          success: function (data) {
+            self.$setState({
+              favorites: JSON.parse(data)
+            })
+          }
+        })
+        //on recupere le produit concerné
         var self = this
         var id = this.$route.params.id
         var url = "https://fr.openfoodfacts.org/api/v1/produit/" + id + ".json"
         app.request.json(url, function (data) {
+
           console.log(data)
           self.$setState({
             product: data.product
+
           })
         })
+      
+
+       
       },
       pageAfterOut: function () {
         // page has left the view
